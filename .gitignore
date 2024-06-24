@@ -1,2 +1,7 @@
-Tests/Julius/LSTM-AE/data
+# Python
 __pycache__
+
+# PyTorch
+*.pt
+
+Tests/Julius/LSTM-AE/data
