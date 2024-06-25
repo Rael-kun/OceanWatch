@@ -1,0 +1,22 @@
+Given a bunch of AIS data, here are the ordered steps for preprocessing:
+1) Remove unnecessary columns (Keep Lat, Lon, Speed, Heading, Timestamp, MMSI)
+2) Drop all null values
+3) Convert timestamp to seconds since 1970.
+4) Calculate timestep inbetween each message (sort by mmsi and check at each step that the mmsi has not changed)
+5) Create a path counter by incrementing the path every time the timestep is over an hour or mmsi is changed (remember, should be
+sorted first by mmsi and then by timestamp in the data so this works)
+6) Create a separate datatable which holds the path number as the index, and the pathCount (number of messages from a given path) 
+as the result
+7) Calculate all paths that have a too short or too long length (for me I used <24 or >144) and store their indexs to an array
+8) Eliminate all invalid paths by cycling through the array, make sure to do this by sorting by path number and incrementally
+going through the pathElimination array (otherwise it will take years)
+9) Split the data in train, test, and validate (I used 80-10-10 split)
+10) For each, create a new pathIndex called pathIni and start this index at 0, incrementing every time the path changes (this
+is done since paths have been removed, so you might have path 4 followed by path 6, and this helps indexing in the dict later)
+11) Normalize values, specifically:
+  Lat = (lat - lat_min) / (lat_max-lat_min)
+  Lon = (lon - lon_min) / (lon_max-lon_min)
+  Speed = speed / 50
+  Heading = heading / 360
+12) When storing as an dict, make sure to use a 2d dict, of the format:
+{'mmsi': #######, 'traj': array([[lat, lon, speed, heading, timestamp, mmsi], ...])}
