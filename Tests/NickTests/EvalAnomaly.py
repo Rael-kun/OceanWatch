@@ -11,6 +11,27 @@ model = Prog.TrAISformer(cf, partition_model=None)
 ## Evaluation
 # ===============================
 # Load the best model
+# Test check
+testAnomList = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+                0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+                0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 
+                1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+                0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 
+                1, 1, 1, 1, 1, 1, 1, 1]
 
 # FIRST DATA
 ## Data
@@ -22,13 +43,14 @@ datapath = os.path.join(cf.datadir, cf.testset_name)
 print(f"Loading {datapath}...")
 with open(datapath, "rb") as f:
     l_pred_errors = pickle.load(f)
-for V in l_pred_errors.values():
-    try:
-        moving_idx = np.where(V["traj"][:, 2] > moving_threshold)[0][0]
-    except:
-        moving_idx = len(V["traj"]) - 1  # This track will be removed
-    V["traj"] = V["traj"][moving_idx:, :]
-Data = [x for x in l_pred_errors.values() if not np.isnan(x["traj"]).any() and len(x["traj"]) > cf.min_seqlen]
+#for V in l_pred_errors.values():
+#    try:
+#        moving_idx = np.where(V["traj"][:, 2] > moving_threshold)[0][0]
+#    except:
+#        moving_idx = len(V["traj"]) - 1  # This track will be removed
+#    V["traj"] = V["traj"][moving_idx:, :]
+#Data = [x for x in l_pred_errors.values() if not np.isnan(x["traj"]).any() and len(x["traj"]) > cf.min_seqlen]
+Data = [x for x in l_pred_errors.values()]
 print(len(l_pred_errors), len(Data))
 print(f"Length: {len(Data)}")
 print("Creating pytorch dataset...")
@@ -42,15 +64,14 @@ else:
     aisdatasets = Prog.AISDataset(Data,
                                             max_seqlen=cf.max_seqlen + 1,
                                             device=cf.device)
-    shuffle = True
+    shuffle = False
     aisdls = DataLoader(aisdatasets,
-                            batch_size=cf.batch_size,
+                            batch_size=1,#cf.batch_size,
                             shuffle=shuffle)
 # NOW MODEL LOAD
-
 print("Loading best model...")
 #model.load_state_dict(torch.load(cf.ckpt_path))
-path = ""
+path = "C:\\Users\\DSU\\Desktop\\AllCurrentClasses\\AISweden\\ProgAIS\\results\\Data-pos-pos_vicinity-10-40-blur-True-False-2-1.0-data_size-250-270-30-72-embd_size-256-256-128-128-head-4-4-bs-16-lr-0.0006-seqlen-18-120\\model_050.pt"
 model.load_state_dict(torch.load(path))
 print("Model Loaded")
 v_ranges = torch.tensor([2, 3, 0, 0]).to(cf.device)
@@ -63,6 +84,9 @@ l_min_errors, l_mean_errors, l_masks = [], [], []
 pbar = tqdm(enumerate(aisdls), total=len(aisdls))
 with torch.no_grad():
     for it, (seqs, masks, seqlens, mmsis, time_starts) in pbar:
+        if(testAnomList[it] == 0):
+            # if not an anomaly, skip
+            continue
         seqs_init = seqs[:, :cf.init_seqlen, :].to(cf.device)
         masks = masks[:, :max_seqlen].to(cf.device)
         batchsize = seqs.shape[0]
@@ -86,7 +110,7 @@ with torch.no_grad():
             for i in range(len(input_coords[..., :])):
                 plt.plot(input_coords[..., 0], input_coords[..., 1])
                 plt.plot(pred_coords[..., 0], pred_coords[..., 1])
-                plt.savefig(cf.savedir + "indivPath.png")
+                plt.savefig(cf.savedir + "indivPathAnom.png")
         # Accumulation through batches
         l_min_errors.append(error_ens.min(dim=-1))
         l_mean_errors.append(error_ens.mean(dim=-1))
@@ -126,4 +150,4 @@ plt.ylabel("Prediction errors (km)")
 plt.xlim([0, 12])
 plt.ylim([0, 20])
 # plt.ylim([0,pred_errors.max()+0.5])
-plt.savefig(cf.savedir + "prediction_error.png")
+plt.savefig(cf.savedir + "prediction_errorAnom.png")

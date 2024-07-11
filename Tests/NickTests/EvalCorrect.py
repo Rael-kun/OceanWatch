@@ -11,6 +11,29 @@ model = Prog.TrAISformer(cf, partition_model=None)
 ## Evaluation
 # ===============================
 # Load the best model
+# Test check
+testAnomList = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 
+                0, 1, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 
+                1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+                0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 
+                1, 1, 1, 1, 1, 1, 1, 1]
+#27
+#[42, 68, 69, 72, 73, 76, 77, 79, 80, 81, 82, 83, 84, 86, 91, 92, 93, 94, 95, 97, 98, 99, 100, 101, 102, 104, 108, 109, 110, 111, 118, 119, 122, 123, 124, 126, 128, 129, 130, 131, 132, 133, 134, 135, 140, 141, 142, 143, 144, 145, 146, 147, 148, 154, 155, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 188, 189, 220, 233, 234, 283, 309, 310, 311, 312, 314, 315, 316, 319, 320, 322, 323, 330, 331, 332, 338, 339, 340, 341, 346, 347, 348, 349, 350, 351, 352, 353, 357, 358, 362, 363, 364, 375, 376, 378, 379, 393, 394, 484, 510]
 
 # FIRST DATA
 ## Data
@@ -28,7 +51,29 @@ for V in l_pred_errors.values():
     except:
         moving_idx = len(V["traj"]) - 1  # This track will be removed
     V["traj"] = V["traj"][moving_idx:, :]
+
 Data = [x for x in l_pred_errors.values() if not np.isnan(x["traj"]).any() and len(x["traj"]) > cf.min_seqlen]
+#arr = []
+#for i in range(521):
+#    arr.append(i)
+#for i in range(521):
+#    # cycle through all l_pred_errors
+#    x = l_pred_errors[i]
+    #if (x in Data):
+    #    print("Success")
+    #else:
+    #    print("Fail")
+
+#    for j in range(len(Data)):
+#        try:
+#            if(x == Data[j]):
+#                print(i)
+#                arr.remove(i)
+#        except:
+#            continue
+#print("Here is array", arr)
+        
+#Data = [x for x in l_pred_errors.values() if len(x["traj"]) > cf.min_seqlen]#if not np.isnan(x["traj"]).any()]
 print(len(l_pred_errors), len(Data))
 print(f"Length: {len(Data)}")
 print("Creating pytorch dataset...")
@@ -42,15 +87,15 @@ else:
     aisdatasets = Prog.AISDataset(Data,
                                             max_seqlen=cf.max_seqlen + 1,
                                             device=cf.device)
-    shuffle = True
-    aisdls = DataLoader(aisdatasets,
-                            batch_size=cf.batch_size,
+    shuffle = False
+    aisdls = Prog.DataLoader(aisdatasets,
+                            batch_size=1,#cf.batch_size,
                             shuffle=shuffle)
 # NOW MODEL LOAD
 
 print("Loading best model...")
 #model.load_state_dict(torch.load(cf.ckpt_path))
-path = ""
+path = "C:\\Users\\DSU\\Desktop\\AllCurrentClasses\\AISweden\\ProgAIS\\results\\Data-pos-pos_vicinity-10-40-blur-True-False-2-1.0-data_size-250-270-30-72-embd_size-256-256-128-128-head-4-4-bs-16-lr-0.0006-seqlen-18-120\\model_005.pt"
 model.load_state_dict(torch.load(path))
 print("Model Loaded")
 v_ranges = torch.tensor([2, 3, 0, 0]).to(cf.device)
@@ -63,6 +108,9 @@ l_min_errors, l_mean_errors, l_masks = [], [], []
 pbar = tqdm(enumerate(aisdls), total=len(aisdls))
 with torch.no_grad():
     for it, (seqs, masks, seqlens, mmsis, time_starts) in pbar:
+        if(testAnomList[it] == 1):
+            # if an anomaly, skip
+            continue
         seqs_init = seqs[:, :cf.init_seqlen, :].to(cf.device)
         masks = masks[:, :max_seqlen].to(cf.device)
         batchsize = seqs.shape[0]
@@ -86,7 +134,7 @@ with torch.no_grad():
             for i in range(len(input_coords[..., :])):
                 plt.plot(input_coords[..., 0], input_coords[..., 1])
                 plt.plot(pred_coords[..., 0], pred_coords[..., 1])
-                plt.savefig(cf.savedir + "indivPath.png")
+                plt.savefig(cf.savedir + "indivPathCorrect.png")
         # Accumulation through batches
         l_min_errors.append(error_ens.min(dim=-1))
         l_mean_errors.append(error_ens.mean(dim=-1))
@@ -126,4 +174,4 @@ plt.ylabel("Prediction errors (km)")
 plt.xlim([0, 12])
 plt.ylim([0, 20])
 # plt.ylim([0,pred_errors.max()+0.5])
-plt.savefig(cf.savedir + "prediction_error.png")
+plt.savefig(cf.savedir + "prediction_errorCorrect.png")
