@@ -1,6 +1,5 @@
-# OceanWatch
-Anomaly detection AI using open-source AIS data 
-
+# IMPORTANT NOTE
+This branch contains many different experiments and versions of various files so they can be conveniently browsed without needing to look through the git history. We make no guarantees about the usability of these files. 
 
 ## Usage notes
 
